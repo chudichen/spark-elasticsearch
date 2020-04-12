@@ -4,3 +4,6 @@
 */**/docker/*.sh
 */**/docker/*.sock
 */**/docker/data
+metastore_db
+*/**/.idea
+.idea
