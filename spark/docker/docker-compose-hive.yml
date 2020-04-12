@@ -1,0 +1,87 @@
+version: '3'
+services:
+  namenode:
+    image: bde2020/hadoop-namenode:1.1.0-hadoop2.8-java8
+    container_name: namenode
+    volumes:
+      - ./data/namenode:/hadoop/dfs/name
+    environment:
+      - CLUSTER_NAME=test
+    env_file:
+      - hadoop-hive.env
+    ports:
+      - 50070:50070
+      - 8020:8020
+      - 50010:50010
+
+  resourcemanager:
+    image: bde2020/hadoop-resourcemanager:1.1.0-hadoop2.8-java8
+    container_name: resourcemanager
+    environment:
+      - CLUSTER_NAME=test
+    env_file:
+      - hadoop-hive.env
+    ports:
+      - 8088:8088
+
+  historyserver:
+    image: bde2020/hadoop-historyserver:1.1.0-hadoop2.8-java8
+    container_name: historyserver
+    environment:
+      - CLUSTER_NAME=test
+    env_file:
+      - hadoop-hive.env
+    ports:
+      - 8188:8188
+
+  datanode:
+    image: bde2020/hadoop-datanode:1.1.0-hadoop2.8-java8
+    container_name: datanode
+    depends_on: 
+      - namenode
+    volumes:
+      - ./data/datanode:/hadoop/dfs/data
+    env_file:
+      - hadoop-hive.env
+    ports:
+      - 50075:50075
+
+  nodemanager:
+    image: bde2020/hadoop-nodemanager:1.1.0-hadoop2.8-java8
+    container_name: nodemanager
+    hostname: nodemanager
+    environment:
+      - CLUSTER_NAME=test
+    env_file:
+      - hadoop-hive.env
+    ports:
+      - 8042:8042
+
+  hive-server:
+    image: bde2020/hive:2.1.0-postgresql-metastore
+    container_name: hive-server
+    env_file:
+      - hadoop-hive.env
+    environment:
+      - "HIVE_CORE_CONF_javax_jdo_option_ConnectionURL=jdbc:postgresql://hive-metastore/metastore"
+    ports:
+      - 10000:10000
+
+  hive-metastore:
+    image: bde2020/hive:2.1.0-postgresql-metastore
+    container_name: hive-metastore
+    env_file:
+      - hadoop-hive.env
+    command: /opt/hive/bin/hive --service metastore
+    ports:
+      - 9083:9083
+
+  hive-metastore-postgresql:
+    image: bde2020/hive-metastore-postgresql:2.1.0
+    container_name: hive-metastore-postgresql
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data/postgresql/:/var/lib/postgresql/data
+    environment:
+      PGDATA: /tmp
