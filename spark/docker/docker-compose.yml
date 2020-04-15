@@ -134,3 +134,13 @@ services:
 #networks:
 #  es_network:
 #    external: true
+
+  consul:
+    image: consul:latest
+    container_name: consul
+    volumes:
+      - ./data:/consul/data
+      - ./config:/consul/config
+    ports:
+    - 8500:8500
+    command: agent -server -bind=0.0.0.0 -client=0.0.0.0 -node=consul_Server1 -bootstrap-expect=1 -ui
