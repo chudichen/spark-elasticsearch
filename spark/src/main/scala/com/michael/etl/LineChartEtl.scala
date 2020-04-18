@@ -3,7 +3,7 @@ package com.michael.etl
 import java.time.{LocalDate, Month, ZoneId}
 import java.util.Date
 
-import com.michael.BaseSparkSession
+import com.michael.base.BaseSparkSession
 import com.michael.util.{DateStyle, DateUtil}
 import com.michael.vo.LineVO
 

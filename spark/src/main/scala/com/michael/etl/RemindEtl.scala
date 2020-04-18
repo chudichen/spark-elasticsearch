@@ -7,7 +7,7 @@ import java.time.LocalDate
 import java.time.Month
 import java.time.ZoneId
 
-import com.michael.BaseSparkSession
+import com.michael.base.BaseSparkSession
 import com.michael.caseclass.{CouponReminder, FreeReminder}
 
 /**

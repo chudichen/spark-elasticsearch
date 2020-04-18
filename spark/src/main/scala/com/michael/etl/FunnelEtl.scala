@@ -1,6 +1,6 @@
 package com.michael.etl
 
-import com.michael.BaseSparkSession
+import com.michael.base.BaseSparkSession
 import com.michael.vo.{FunnelVO, MemberVO}
 
 /**
