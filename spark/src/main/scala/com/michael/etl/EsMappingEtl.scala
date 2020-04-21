@@ -1,7 +1,7 @@
 package com.michael.etl
 
 import com.michael.base.BaseSparkSession
-import org.elasticsearch.spark.rdd.EsSpark
+import org.elasticsearch.spark.sql.EsSparkSQL
 
 /**
  * ES Mapping 清洗
@@ -67,7 +67,7 @@ object EsMappingEtl extends BaseSparkSession {
       " left join overTime as ot on m.memberId = ot.memberId " +
       " left join feedback as f on m.memberId = f.memberId ")
 
-    EsSpark.saveToEs(result.rdd, "/tag/_doc")
+    EsSparkSQL.saveToEs(result, "/tag/_doc")
   }
 
 }
