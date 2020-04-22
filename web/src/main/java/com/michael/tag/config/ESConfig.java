@@ -24,7 +24,7 @@ public class ESConfig {
     private static final int ADDRESS_LENGTH = 2;
     private static final String HTTP_SCHEME = "http";
 
-    @Value("${elasticsearch.ip}")
+    @Value("${chudichen.elasticsearch.ip}")
     private String[] ipAddress;
 
     @Bean
